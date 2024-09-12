@@ -5,6 +5,13 @@ type Address {
   country: String!
 }
 
+type SocialNetworks {
+  facebookUrl: String
+  twitterUrl: String
+  instagramUrl: String
+  linkedinUrl: String
+}
+
 type User {
   id: ID!
   email: String!
@@ -17,29 +24,27 @@ type User {
   socialNetworks: SocialNetworks
 }
 
-type SocialNetworks {
-  facebookUrl: String
-  twitterUrl: String
-  instagramUrl: String
-  linkedinUrl: String
-}
-
 type Query {
   getUser(id: ID!): User
   getUsers(
-    limit: Int,
-    offset: Int,
-    gender: Gender,
-    city: String,
-    minHeight: Float,
-    maxHeight: Float,
-    minWeight: Float,
-    maxWeight: Float,
+    limit: Int
+    offset: Int
+    gender: Gender
+    city: String
+    minHeight: Float
+    maxHeight: Float
+    minWeight: Float
+    maxWeight: Float
     hasSocialNetworks: Boolean
   ): [User!]!
   searchUsers(name: String!): [User!]!
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+}
 
 input AddressInput {
   street: String!
@@ -53,8 +58,31 @@ input PhoneNumberInput {
   number: String!
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  UNKNOWN
+input SocialNetworksInput {
+  facebookUrl: String
+  twitterUrl: String
+  instagramUrl: String
+  linkedinUrl: String
+}
+
+input UserInput {
+  email: String!
+  name: String!
+  address: AddressInput
+  phoneNumber: PhoneNumberInput
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  address: AddressInput
+  phoneNumber: PhoneNumberInput
+  gender: Gender
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
 }

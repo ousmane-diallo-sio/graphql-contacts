@@ -8,6 +8,9 @@ targets:
         enabled: true
         options:
           schema: graphql_contacts|lib/schema.graphql
+          when_extensions:
+            when: true
+            maybeWhen: true
           type_overrides:
             Long:
               name: int

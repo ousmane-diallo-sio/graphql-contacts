@@ -1,0 +1,23 @@
+query User($id: ID!) {
+  user(id: $id) {
+    id
+    email
+    name
+    address {
+      street
+      city
+      zip
+      country
+    }
+    phoneNumber
+    gender
+    height
+    weight
+    socialNetworks {
+      facebookUrl
+      twitterUrl
+      instagramUrl
+      linkedinUrl
+    }
+  }
+}
