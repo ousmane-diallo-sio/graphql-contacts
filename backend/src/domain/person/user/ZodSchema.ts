@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CreateAddressSchema } from '../address/ZodSchema';
+import { CreateAddressSchema } from '../../address/ZodSchema';
 import { GenderEnum } from './Entity';
 
 export const PasswordValidatior = z.string()

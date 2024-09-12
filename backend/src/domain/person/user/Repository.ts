@@ -1,12 +1,12 @@
-import { ServerMessage } from '../../types/response';
-import { omit } from '../../lib/utils';
+import { ServerMessage } from '../../../types/response';
+import { omit } from '../../../lib/utils';
 import { User } from './Entity';
-import { orm } from '../..';
+import { orm } from '../../..';
 import { FilterQuery, LoadStrategy, wrap } from '@mikro-orm/core';
-import { NotFoundError } from '../../exceptions/FedodoError';
+import { NotFoundError } from '../../../exceptions/FedodoError';
 import { CreateUserDTO, UpdateUserDTO } from '.';
-import { Address } from '../address/Entity';
-import { SocialNetworks } from '../social-networks/Entity';
+import { Address } from '../../address/Entity';
+import { SocialNetworks } from '../../social-networks/Entity';
 
 class UserRepository {
 

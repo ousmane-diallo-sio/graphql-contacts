@@ -1,3 +1,19 @@
+interface Person {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
+}
+
+type Contact implements Person{
+  referral: User!
+}
+
 type Address {
   street: String!
   city: String!
@@ -12,16 +28,10 @@ type SocialNetworks {
   linkedinUrl: String
 }
 
-type User {
-  id: ID!
-  email: String!
-  name: String!
-  address: Address
-  phoneNumber: String
-  gender: Gender!
-  height: Float
-  weight: Float
-  socialNetworks: SocialNetworks
+
+type User implements Person{
+  password: String!
+  salt: String!
 }
 
 type Query {
