@@ -1,0 +1,60 @@
+type Address {
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
+}
+
+type SocialNetworks {
+  facebookUrl: String
+  twitterUrl: String
+  instagramUrl: String
+  linkedinUrl: String
+}
+
+type Query {
+  getUser(id: ID!): User
+  getUsers(
+    limit: Int,
+    offset: Int,
+    gender: Gender,
+    city: String,
+    minHeight: Float,
+    maxHeight: Float,
+    minWeight: Float,
+    maxWeight: Float,
+    hasSocialNetworks: Boolean
+  ): [User!]!
+  searchUsers(name: String!): [User!]!
+}
+
+
+input AddressInput {
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+
+input PhoneNumberInput {
+  type: String!
+  number: String!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+}
