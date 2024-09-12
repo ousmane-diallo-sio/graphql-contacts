@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:graphql_contacts/domain/gender_model.dart';
-import 'package:graphql_contacts/domain/social_networks_model.dart';
+import 'package:graphql_contacts/src/domain/gender_model.dart';
+import 'package:graphql_contacts/src/domain/social_networks_model.dart';
 import 'address_model.dart';
 
 part 'user_model.freezed.dart';
