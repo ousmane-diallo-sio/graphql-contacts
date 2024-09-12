@@ -1,10 +1,10 @@
-import 'package:graphql_contacts/src/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_contacts/src/routing/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:graphql_contacts/src/constants/themes.dart' as themes;
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+class App extends ConsumerWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
