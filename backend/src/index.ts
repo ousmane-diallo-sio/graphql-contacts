@@ -1,4 +1,10 @@
-import './extentions';
+import EnvConfig from './lib/config/EnvConfig';
+import express from 'express';
+import { authErrorHandler, requestLogger } from './lib/middlewares';
+import bodyParser from 'body-parser';
+import { MikroORM } from '@mikro-orm/postgresql';
+import mikroORMConfig from './db/mikro-orm.config';
+import userController from './domain/user/Controller';
 
 console.log('\n---------------------------');
 console.log('📀 Server starting');
@@ -19,7 +25,6 @@ app.get('/', (req, res) => {
 })
 
 app.use("/user", userController);
-app.use("/sleep-night", sleepNightController);
 
 app.use(authErrorHandler);
 

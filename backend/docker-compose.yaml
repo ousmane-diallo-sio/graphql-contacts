@@ -1,0 +1,25 @@
+services:
+  graphql-contact-db:
+    container_name: graphql-contact-db
+    image: postgres:16.4-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/data/graphql-contact-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+  graphql-contact-api:
+    container_name: graphql-contact-api
+    build: .
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - graphql-contact-db
+    ports:
+      - 3005:3005
