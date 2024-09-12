@@ -1,0 +1,23 @@
+query Users($limit: Int, $offset: Int) {
+  users(limit: $limit, offset: $offset) {
+    id
+    email
+    name
+    address {
+      street
+      city
+      zip
+      country
+    }
+    phoneNumber
+    gender
+    height
+    weight
+    socialNetworks {
+      facebookUrl
+      twitterUrl
+      instagramUrl
+      linkedinUrl
+    }
+  }
+}

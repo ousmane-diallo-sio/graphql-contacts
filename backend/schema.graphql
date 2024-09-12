@@ -54,8 +54,6 @@ type Query {
   searchUsers(name: String): [User]
 }
 
-
-
 enum Gender {
   MALE
   FEMALE
