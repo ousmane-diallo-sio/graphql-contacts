@@ -7,7 +7,7 @@ targets:
       ferry_generator|graphql_builder:
         enabled: true
         options:
-          schema: graphql_contac|lib/schema.graphql
+          schema: graphql_contacts|lib/schema.graphql
           type_overrides:
             Long:
               name: int
@@ -18,4 +18,4 @@ targets:
       ferry_generator|serializer_builder:
         enabled: true
         options:
-          schema: graphql_contac|lib/schema.graphql
+          schema: graphql_contacts|lib/schema.graphql
