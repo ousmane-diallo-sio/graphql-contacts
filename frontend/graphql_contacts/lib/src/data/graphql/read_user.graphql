@@ -1,0 +1,26 @@
+query readUser($id: ID!) {
+  readUser(id: $id) {
+    id
+    email
+    name
+    address {
+      street
+      city
+      zip
+      country
+    }
+    phoneNumber {
+      type
+      number
+    }
+    gender
+    height
+    weight
+    socialNetworks {
+      facebookUrl
+      twitterUrl
+      instagramUrl
+      linkedinUrl
+    }
+  }
+}

@@ -58,3 +58,25 @@ enum Gender {
   FEMALE
   UNKNOWN
 }
+
+input UserInput {
+  email: String!
+  name: String!
+  address: AddressInput
+  phoneNumber: PhoneNumberInput
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  address: AddressInput
+  phoneNumber: PhoneNumberInput
+  gender: Gender
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+}
