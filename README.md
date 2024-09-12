@@ -11,6 +11,7 @@
 - [Setup](#setup)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
+- [Environment Variables](#environment-variables)
 
 ## Features
 
@@ -26,7 +27,6 @@
 
 ### Search Functionality:
 - Users can search for contacts by name.
-
 
 ## Tech Stack
 
@@ -52,3 +52,13 @@
 ### Subscriptions:
 - Subscribe to real-time updates when contacts are added, updated, or deleted.
 - Ensure all connected clients are always in sync with the latest contact list.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your `.env` file:
+
+```plaintext
+DB_NAME=graphql-contact-db
+DB_USER=contactuser
+DB_PASSWORD=rPW7nUkJFjx8YH3qN2hR5e
+```
