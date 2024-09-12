@@ -25,13 +25,15 @@ type User {
 }
 
 type Query {
-  readUser(id: ID): User
-  readUsers(
+  user(id: ID): User
+  users(
     limit: Int
     offset: Int
   ): [User]
   searchUsers(name: String): [User]
 }
+
+
 
 enum Gender {
   MALE
