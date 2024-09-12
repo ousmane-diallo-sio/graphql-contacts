@@ -1,0 +1,21 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+      ferry_generator|graphql_builder:
+        enabled: true
+        options:
+          schema: graphql_contac|lib/schema.graphql
+          type_overrides:
+            Long:
+              name: int
+            Float:
+              name: double
+            Date:
+              name: DateTime
+      ferry_generator|serializer_builder:
+        enabled: true
+        options:
+          schema: graphql_contac|lib/schema.graphql
