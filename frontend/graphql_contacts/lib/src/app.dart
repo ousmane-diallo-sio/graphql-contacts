@@ -9,7 +9,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: "Mediactil",
+      title: "Graphql Contacts",
       debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(routerProvider),
       theme: themes.lightTheme,
