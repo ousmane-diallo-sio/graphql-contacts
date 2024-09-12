@@ -1,5 +1,5 @@
-mutation updateUser($id: ID!, $input: UpdateUserInput!) {
-  updateUser(id: $id, input: $input) {
+mutation UpdateUser($input: UpdateUserInput!) {
+  user(input: $input) {
     id
     email
     name
@@ -9,10 +9,7 @@ mutation updateUser($id: ID!, $input: UpdateUserInput!) {
       zip
       country
     }
-    phoneNumber {
-      type
-      number
-    }
+    phoneNumber
     gender
     height
     weight

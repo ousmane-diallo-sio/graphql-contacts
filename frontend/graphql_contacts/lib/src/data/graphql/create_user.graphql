@@ -1,6 +1,6 @@
 
-mutation createUser($input: UserInput!) {
-  createUser(input: $input) {
+mutation CreateUser($input: UserInput!) {
+  user(input: $input) {
     id
     email
     name
@@ -10,10 +10,7 @@ mutation createUser($input: UserInput!) {
       zip
       country
     }
-    phoneNumber {
-      type
-      number
-    }
+    phoneNumber
     gender
     height
     weight

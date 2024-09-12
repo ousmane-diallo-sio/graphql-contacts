@@ -1,4 +1,6 @@
 import 'package:graphql_contacts/src/constants/sizes.dart';
+import 'package:graphql_contacts/src/provider/ferry_client.dart';
+import 'package:graphql_contacts/src/provider/hive_store.dart';
 import 'package:graphql_contacts/src/utils/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,7 +9,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_startup.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<void> appStartup(AppStartupRef ref) async {}
+Future<void> appStartup(AppStartupRef ref) async {
+  ref.onDispose(() {
+    ref.invalidate(hiveStoreProvider);
+    ref.invalidate(ferryClientProvider);
+  });
+  await ref.watch(hiveStoreProvider.future);
+  await ref.watch(ferryClientProvider.future);
+}
 
 class AppStartupWidget extends ConsumerWidget {
   const AppStartupWidget({super.key, required this.onLoaded});

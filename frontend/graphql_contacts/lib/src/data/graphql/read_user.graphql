@@ -1,5 +1,5 @@
-query readUser($id: ID!) {
-  readUser(id: $id) {
+query User($id: ID!) {
+  user(id: $id) {
     id
     email
     name
@@ -9,10 +9,7 @@ query readUser($id: ID!) {
       zip
       country
     }
-    phoneNumber {
-      type
-      number
-    }
+    phoneNumber
     gender
     height
     weight
