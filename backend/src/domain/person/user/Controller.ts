@@ -1,12 +1,12 @@
 import { Request, RequestHandler, Response, Router } from "express";
 import { userRepository } from "./Repository";
-import { formatResponse } from "../../lib/utils/response";
-import { jwt } from "../../lib/middlewares";
+import { formatResponse } from "../../../lib/utils/response";
+import { jwt } from "../../../lib/middlewares";
 import { z } from "zod";
-import { omit } from "../../lib/utils";
-import { ServerMessage } from "../../types/response";
+import { omit } from "../../../lib/utils";
+import { ServerMessage } from "../../../types/response";
 import { CreateUserSchema, UpdateUserSchema, UserLoginSchema } from "./ZodSchema";
-import { FedodoError } from "../../exceptions/FedodoError";
+import { FedodoError } from "../../../exceptions/FedodoError";
 
 const userController = Router();
 

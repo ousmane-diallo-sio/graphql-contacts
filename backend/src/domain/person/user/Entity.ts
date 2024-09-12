@@ -1,44 +1,25 @@
-import { BeforeCreate, BeforeUpdate, BeforeUpsert, Embedded, Entity, Enum, type EventArgs, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from '../../db/BaseEntity';
+import { BeforeCreate, BeforeUpdate, BeforeUpsert, Cascade, Collection, Embedded, Entity, Enum, type EventArgs, OneToMany, Property, Unique } from '@mikro-orm/core';
+import { BaseEntity } from '../../../db/BaseEntity';
 import jwt from "jsonwebtoken";
-import EnvConfig from '../../lib/config/EnvConfig';
+import EnvConfig from '../../../lib/config/EnvConfig';
 import crypto from "crypto";
-import { Address } from '../address/Entity';
-import { SocialNetworks } from '../social-networks/Entity';
+import { Address } from '../../address/Entity';
+import { SocialNetworks } from '../../social-networks/Entity';
+import { Person } from '../Entity';
+import { Contact } from '../contact/Entity';
 
 @Entity()
 @Unique({ properties: ['email'] })
-export class User extends BaseEntity {
-
-  @Property({ unique: true })
-  email!: string;
-
-  @Property()
-  name!: string;
-
-  @Embedded()
-  address?: Address;
-
-  @Property()
-  phoneNumber?: string;
-
-  @Enum()
-  gender!: GenderEnum;
-
-  @Property()
-  height?: number;
-
-  @Property()
-  weight?: number;
-
-  @Embedded()
-  socialNetworks?: SocialNetworks;
+export class User extends Person {
 
   @Property({ hidden: true, lazy: true })
   password!: string;
 
   @Property({ hidden: true, lazy: true })
   salt!: string;
+
+  @OneToMany(() => Contact, contact => contact.referal, { cascade: [Cascade.ALL], orphanRemoval: true })
+  contacts = new Collection<Contact>(this);
 
   @BeforeCreate()
   @BeforeUpdate()
