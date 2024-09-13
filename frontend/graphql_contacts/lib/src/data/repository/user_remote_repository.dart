@@ -14,16 +14,15 @@ part 'user_remote_repository.g.dart';
 
 @riverpod
 UserRemoteDataSource userRemoteDataSourceProvider(
-    UserRemoteDataSourceProviderRef ref) {
+  UserRemoteDataSourceProviderRef ref,
+) {
   return UserRemoteDataSource(
     ferryClient: ref.watch(ferryClientProvider).requireValue,
   );
 }
 
 class UserRemoteDataSource {
-  UserRemoteDataSource({
-    required this.ferryClient,
-  });
+  UserRemoteDataSource({required this.ferryClient});
   final Client ferryClient;
 
   Future<UserModel> getUser({
@@ -34,7 +33,7 @@ class UserRemoteDataSource {
     final data = response.data;
     if (response.hasErrors) throw const UnknownException();
     if (data == null) throw const DataNotFoundException();
-    return UserModel.fromJson(data.user!.toJson());
+    return UserModel.fromJson(data.user.toJson());
   }
 
   Future<List<UserModel>> getUsers() async {
@@ -43,11 +42,9 @@ class UserRemoteDataSource {
     final data = response.data;
     if (response.hasErrors) throw const UnknownException();
     if (data == null) throw const DataNotFoundException();
-    return [
-      ...?data.users?.nonNulls.map((e) {
-        return UserModel.fromJson(e.toJson());
-      })
-    ];
+    return data.users.nonNulls.map((e) {
+      return UserModel.fromJson(e.toJson());
+    }).toList();
   }
 
   Future<UserModel> createUser({

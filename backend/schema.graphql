@@ -10,48 +10,51 @@ interface Person {
   socialNetworks: SocialNetworks
 }
 
-type Contact implements Person{
+type Contact implements Person {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
   referral: User!
 }
 
 type Address {
-  street: String
-  city: String
-  zip: String
-  country: String
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
 }
 
 type SocialNetworks {
-  facebookUrl: String
-  twitterUrl: String
-  instagramUrl: String
-  linkedinUrl: String
+  facebookUrl: String!
+  twitterUrl: String!
+  instagramUrl: String!
+  linkedinUrl: String!
 }
 
-type User {
-  id: ID
-  email: String
-  name: String
+type User implements Person {
+  id: ID!
+  email: String!
+  name: String!
   address: Address
   phoneNumber: String
-  gender: Gender
+  gender: Gender!
   height: Float
   weight: Float
   socialNetworks: SocialNetworks
-}
-
-type User implements Person{
   password: String!
   salt: String!
 }
 
 type Query {
-  user(id: ID): User
-  users(
-    limit: Int
-    offset: Int
-  ): [User]
-  searchUsers(name: String): [User]
+  user(id: ID!): User!
+  users: [User!]!
+  searchUsers(name: String!): [User!]!
 }
 
 enum Gender {
@@ -61,30 +64,30 @@ enum Gender {
 }
 
 input AddressInput {
-  street: String
-  city: String
-  zip: String
-  country: String
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
 }
 
 input PhoneNumberInput {
-  type: String
-  number: String
+  type: String!
+  number: String!
 }
 
 input SocialNetworksInput {
-  facebookUrl: String
-  twitterUrl: String
-  instagramUrl: String
-  linkedinUrl: String
+  facebookUrl: String!
+  twitterUrl: String!
+  instagramUrl: String!
+  linkedinUrl: String!
 }
 
 input UserInput {
-  email: String
-  name: String
+  email: String!
+  name: String!
   address: AddressInput
   phoneNumber: PhoneNumberInput
-  gender: Gender
+  gender: Gender!
   height: Float
   weight: Float
   socialNetworks: SocialNetworksInput
@@ -103,8 +106,6 @@ input UpdateUserInput {
 
 type Mutation {
   createUser(input: UserInput!): User!
-
   updateUser(id: ID!, input: UpdateUserInput!): User!
-
   deleteUser(id: ID!): User!
 }
