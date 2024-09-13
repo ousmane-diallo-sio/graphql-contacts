@@ -1,21 +1,12 @@
 import 'package:ferry/ferry.dart';
 import 'package:graphql_contacts/__generated__/schema.schema.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/create_user.data.gql.dart';
 import 'package:graphql_contacts/src/data/graphql/__generated__/create_user.req.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/create_user.var.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/delete_user.data.gql.dart';
 import 'package:graphql_contacts/src/data/graphql/__generated__/delete_user.req.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/delete_user.var.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/read_user.data.gql.dart';
 import 'package:graphql_contacts/src/data/graphql/__generated__/read_user.req.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/read_user.var.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/read_users.data.gql.dart';
 import 'package:graphql_contacts/src/data/graphql/__generated__/read_users.req.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/read_users.var.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/update_user.data.gql.dart';
 import 'package:graphql_contacts/src/data/graphql/__generated__/update_user.req.gql.dart';
-import 'package:graphql_contacts/src/data/graphql/__generated__/update_user.var.gql.dart';
 import 'package:graphql_contacts/src/domain/user_model.dart';
+import 'package:graphql_contacts/src/exceptions/app_exceptions.dart';
 import 'package:graphql_contacts/src/provider/ferry_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,41 +26,65 @@ class UserRemoteDataSource {
   });
   final Client ferryClient;
 
-  Stream<OperationResponse<GUserData, GUserVars>> getUserStream({
+  Future<UserModel> getUser({
     required String id,
-  }) {
+  }) async {
     final request = GUserReq((b) => b..vars.id = id);
-    return ferryClient.request(request);
+    final response = await ferryClient.request(request).first;
+    final data = response.data;
+    if (response.hasErrors) throw const UnknownException();
+    if (data == null) throw const DataNotFoundException();
+    return UserModel.fromJson(data.user!.toJson());
   }
 
-  Stream<OperationResponse<GUsersData, GUsersVars>> getUsersStream() {
+  Future<List<UserModel>> getUsers() async {
     final request = GUsersReq();
-    return ferryClient.request(request);
+    final response = await ferryClient.request(request).first;
+    final data = response.data;
+    if (response.hasErrors) throw const UnknownException();
+    if (data == null) throw const DataNotFoundException();
+    return [
+      ...?data.users?.nonNulls.map((e) {
+        return UserModel.fromJson(e.toJson());
+      })
+    ];
   }
 
-  Stream<OperationResponse<GCreateUserData, GCreateUserVars>> createUserStream({
+  Future<UserModel> createUser({
     required UserModel user,
-  }) {
+  }) async {
     final request = GCreateUserReq(
       (b) => b..vars.input = GUserInput.fromJson(user.toJson())?.toBuilder(),
     );
-    return ferryClient.request(request);
+    final response = await ferryClient.request(request).first;
+    final data = response.data;
+    if (response.hasErrors) throw const UnknownException();
+    if (data == null) throw const DataNotFoundException();
+    return UserModel.fromJson(data.createUser.toJson());
   }
 
-  Stream<OperationResponse<GUpdateUserData, GUpdateUserVars>> updateUserStream({
+  Future<UserModel> updateUser({
     required UserModel user,
-  }) {
+  }) async {
     final request = GUpdateUserReq(
       (b) =>
           b..vars.input = GUpdateUserInput.fromJson(user.toJson())?.toBuilder(),
     );
-    return ferryClient.request(request);
+    final response = await ferryClient.request(request).first;
+    final data = response.data;
+    if (response.hasErrors) throw const UnknownException();
+    if (data == null) throw const DataNotFoundException();
+    return UserModel.fromJson(data.updateUser.toJson());
   }
 
-  Stream<OperationResponse<GDeleteUserData, GDeleteUserVars>> deleteUserStream({
+  Future<UserModel> deleteUser({
     required String id,
-  }) {
+  }) async {
     final request = GDeleteUserReq((b) => b..vars.id = id);
-    return ferryClient.request(request);
+    final response = await ferryClient.request(request).first;
+    final data = response.data;
+    if (response.hasErrors) throw const UnknownException();
+    if (data == null) throw const DataNotFoundException();
+    return UserModel.fromJson(data.deleteUser.toJson());
   }
 }
