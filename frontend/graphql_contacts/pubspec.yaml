@@ -52,6 +52,7 @@ dependencies:
   gap: ^3.0.1
   url_strategy: ^0.3.0
   envied: ^0.5.4+1
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:
