@@ -5,7 +5,7 @@ import {
     GraphQLID,
   } from 'graphql';
 
-  import 
+   
   
   export default new GraphQLObjectType({
     name: 'User',

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:graphql_contacts/src/app_startup.dart';
 import 'package:graphql_contacts/src/routing/not_found_screen.dart';
 import 'package:graphql_contacts/src/screen/home_screen.dart';
+import 'package:graphql_contacts/src/screen/connexion_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -50,6 +51,19 @@ class HomeScreenRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeScreen();
+    return HomeScreen();
+  }
+}
+
+@TypedGoRoute<ConnexionScreenRoute>(
+  path: '/connexion',
+)
+@immutable
+class ConnexionScreenRoute extends GoRouteData {
+  const ConnexionScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ConnexionScreen();
   }
 }

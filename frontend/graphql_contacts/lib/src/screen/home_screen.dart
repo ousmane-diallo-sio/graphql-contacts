@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../widgets/user_card.dart';
+
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final List<String> entries = <String>['Alice', 'Bob', 'Charlie'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Home Screen",
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Liste de contacts"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return UserCard(name: entries[index]);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
