@@ -1,31 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MyBottomNavigationBar extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemTapped;
+import '../screen/home_screen.dart';
 
-  MyBottomNavigationBar({required this.selectedIndex, required this.onItemTapped});
+class AppBottomNavigationBar extends ConsumerWidget {
+  final int currentIndex;
+
+  AppBottomNavigationBar({required this.currentIndex});
+
+  void _onItemTapped(BuildContext context, WidgetRef ref, int index) {
+    ref.read(selectedIndexProvider.notifier).state = index;
+
+    switch (index) {
+      case 0:
+        context.go('/home');
+        break;
+      case 1:
+        context.go('/profile');
+        break;
+      case 2:
+        context.go('/settings');
+        break;
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return BottomNavigationBar(
+      currentIndex: currentIndex,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
+          icon: Icon(Icons.contacts),
+          label: 'Contacts',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Profile',
+          label: 'Profil',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Paramètres',
         ),
       ],
-      currentIndex: selectedIndex,
-      selectedItemColor: Colors.amber[800],
-      onTap: onItemTapped,
+      onTap: (index) => _onItemTapped(context, ref, index),
     );
   }
 }

@@ -7,7 +7,7 @@ class ConnexionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Connexion'),
+        title: const Text('GraphQL Contacts'),
         centerTitle: true,
       ),
       body: Padding(

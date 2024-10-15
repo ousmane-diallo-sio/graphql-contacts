@@ -5,6 +5,8 @@ import 'package:graphql_contacts/src/routing/not_found_screen.dart';
 import 'package:graphql_contacts/src/screen/home_screen.dart';
 import 'package:graphql_contacts/src/screen/connexion_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../screen/Register_screen.dart';
+import '../screen/add_contact_screen.dart';
 import '../screen/profile_screen.dart';
 import 'package:graphql_contacts/src/screen/settings_screen.dart';
 
@@ -80,7 +82,7 @@ class ProfileScreenRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ProfileScreen();
+    return const ProfileScreen();
   }
 }
 
@@ -94,5 +96,31 @@ class SettingsScreenRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SettingsScreen();
+  }
+}
+
+@TypedGoRoute<RegisterScreenRoute>(
+    path: '/register',
+)
+@immutable
+class RegisterScreenRoute extends GoRouteData {
+  const RegisterScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const RegisterScreen();
+  }
+}
+
+@TypedGoRoute<AddContactScreenRoute>(
+    path: '/add-contact',
+)
+@immutable
+class AddContactScreenRoute extends GoRouteData {
+  const AddContactScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AddContactScreen();
   }
 }
