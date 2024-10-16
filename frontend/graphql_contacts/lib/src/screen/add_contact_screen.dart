@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:graphql_contacts/src/routing/router.dart';
 
 class AddContactScreen extends StatelessWidget {
   const AddContactScreen({super.key});
@@ -12,7 +12,7 @@ class AddContactScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go("/home"); // TODO: use Pop
+           const HomeScreenRoute().go(context);
           },
         ),
       ),

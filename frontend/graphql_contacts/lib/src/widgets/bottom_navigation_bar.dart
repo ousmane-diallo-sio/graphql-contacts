@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:graphql_contacts/src/routing/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../screen/home_screen.dart';
@@ -14,13 +14,13 @@ class AppBottomNavigationBar extends ConsumerWidget {
 
     switch (index) {
       case 0:
-        context.go('/home');
+        const HomeScreenRoute().go(context);
         break;
       case 1:
-        context.go('/profile');
+        const ProfileScreenRoute().go(context);
         break;
       case 2:
-        context.go('/settings');
+        const SettingsScreenRoute().go(context);
         break;
     }
   }
