@@ -3,7 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:graphql_contacts/src/app_startup.dart';
 import 'package:graphql_contacts/src/routing/not_found_screen.dart';
 import 'package:graphql_contacts/src/screen/home_screen.dart';
+import 'package:graphql_contacts/src/screen/connexion_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../screen/Register_screen.dart';
+import '../screen/add_contact_screen.dart';
+import '../screen/profile_screen.dart';
+import 'package:graphql_contacts/src/screen/settings_screen.dart';
+
 
 part 'router.g.dart';
 
@@ -50,6 +56,71 @@ class HomeScreenRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeScreen();
+    return HomeScreen();
+  }
+}
+
+@TypedGoRoute<ConnexionScreenRoute>(
+  path: '/connexion',
+)
+@immutable
+class ConnexionScreenRoute extends GoRouteData {
+  const ConnexionScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ConnexionScreen();
+  }
+}
+
+@TypedGoRoute<ProfileScreenRoute>(
+    path: '/profile',
+)
+@immutable
+class ProfileScreenRoute extends GoRouteData {
+  const ProfileScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ProfileScreen();
+  }
+}
+
+@TypedGoRoute<SettingsScreenRoute>(
+    path: '/settings',
+)
+@immutable
+class SettingsScreenRoute extends GoRouteData {
+  const SettingsScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SettingsScreen();
+  }
+}
+
+@TypedGoRoute<RegisterScreenRoute>(
+    path: '/register',
+)
+@immutable
+class RegisterScreenRoute extends GoRouteData {
+  const RegisterScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const RegisterScreen();
+  }
+}
+
+@TypedGoRoute<AddContactScreenRoute>(
+    path: '/add-contact',
+)
+@immutable
+class AddContactScreenRoute extends GoRouteData {
+  const AddContactScreenRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AddContactScreen();
   }
 }
