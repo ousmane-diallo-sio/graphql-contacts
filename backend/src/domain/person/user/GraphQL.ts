@@ -10,19 +10,19 @@ import {
   GraphQLInterfaceType
 } from 'graphql';
 import { ContactGraphQLType } from '../contact/GraphQL';
-import { GenderEnumGraphQLType, PersonGraphQLInterface } from '../GraphQL';
+import { GenderEnumGraphQLType, PersonGraphQLInterface, PersonGraphQLInterfaceFields } from '../GraphQL';
 import { AddressInputType } from '../../address/GraphQL';
 import { SocialNetworksInputType } from '../../social-networks/GraphQL';
 
-export const UserGraphQLType: GraphQLObjectType = new GraphQLObjectType({
+const UserGraphQLType: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
   interfaces: [PersonGraphQLInterface],
-  fields: {
-    ...PersonGraphQLInterface.getFields(),
+  fields: () => ({
+    ...PersonGraphQLInterfaceFields,
     password: { type: new GraphQLNonNull(GraphQLString) },
     salt: { type: new GraphQLNonNull(GraphQLString) },
     contacts: { type: new GraphQLList(ContactGraphQLType) },
-  },
+  }),
 });
 
 export const CreateUserInputType = new GraphQLInputObjectType({
@@ -55,3 +55,5 @@ export const UpdateUserInputType = new GraphQLInputObjectType({
     password: { type: GraphQLString },
   },
 });
+
+export { UserGraphQLType };

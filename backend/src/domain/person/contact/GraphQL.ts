@@ -10,22 +10,22 @@ import {
   GraphQLInterfaceType,
 } from 'graphql';
 import { UserGraphQLType } from '../user/GraphQL';
-import { GenderEnumGraphQLType, PersonGraphQLInterface } from '../GraphQL';
+import { GenderEnumGraphQLType, PersonGraphQLInterface, PersonGraphQLInterfaceFields } from '../GraphQL';
 import { AddressInputType } from '../../address/GraphQL';
 import { SocialNetworksInputType } from '../../social-networks/GraphQL';
 
 export const ContactGraphQLType: GraphQLObjectType = new GraphQLObjectType({
   name: 'Contact',
   interfaces: [PersonGraphQLInterface],
-  fields: {
-    ...PersonGraphQLInterface.getFields(),
+  fields: () => ({
+    ...PersonGraphQLInterfaceFields,
     referral: { type: new GraphQLNonNull(UserGraphQLType) },
-  },
+  }),
 });
 
 export const CreateContactInputType = new GraphQLInputObjectType({
   name: 'CreateContactInput',
-  fields: {
+  fields: () => ({
     email: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     address: { type: AddressInputType },
@@ -35,7 +35,7 @@ export const CreateContactInputType = new GraphQLInputObjectType({
     weight: { type: GraphQLFloat },
     socialNetworks: { type: SocialNetworksInputType },
     referral: { type: new GraphQLNonNull(GraphQLID) },
-  },
+  }),
 });
 
 export const UpdateContactInputType = new GraphQLInputObjectType({

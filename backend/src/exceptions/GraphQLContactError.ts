@@ -28,6 +28,12 @@ export class GraphQLContactError extends Error {
 
 }
 
+export class AuthenticationError extends GraphQLContactError {
+  constructor(message = "Authentication failed") {
+    super(message, 401);
+  }
+}
+
 export class NotFoundError extends GraphQLContactError {
   constructor(message = "Resource not found") {
     super(message, 404);

@@ -1,6 +1,6 @@
 import EnvConfig from './lib/config/EnvConfig';
 import express from 'express';
-import { authErrorHandler, requestLogger } from './lib/middlewares';
+import { authErrorHandler, graphqljwt, jwt, requestLogger } from './lib/middlewares';
 import bodyParser from 'body-parser';
 import { MikroORM } from '@mikro-orm/postgresql';
 import mikroORMConfig from './db/mikro-orm.config';
@@ -25,10 +25,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use("/graphql", graphqlHTTP({
-  schema: graphQLSchema,
-  graphiql: true
-}))
+app.use(graphqljwt);
+
+app.use("/graphql", graphqlHTTP({ schema: graphQLSchema, graphiql: true }))
 
 app.use(authErrorHandler);
 
