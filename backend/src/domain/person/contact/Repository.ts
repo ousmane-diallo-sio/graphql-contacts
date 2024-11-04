@@ -2,7 +2,6 @@ import { Contact } from './Entity';
 import { orm } from '../../..';
 import { NotFoundError } from '../../../exceptions/GraphQLContactError';
 import { FindAllOptions, FindOneOrFailOptions, wrap } from '@mikro-orm/core';
-import { User } from '../user/Entity';
 
 class ContactRepository {
 
@@ -38,14 +37,14 @@ class ContactRepository {
     return await em.removeAndFlush(contactRef);
   }
 
-  async findAll(options?: FindAllOptions<User, never, "*", never> | undefined) {
+  async findAll(options?: FindAllOptions<Contact, never, "*", never> | undefined) {
     const em = orm.em.fork();
-    return await em.findAll(User, options);
+    return await em.findAll(Contact, options);
   }
 
-  async findById(id: string, options?: FindOneOrFailOptions<User, never, "*", never> | undefined) {
+  async findById(id: string, options?: FindOneOrFailOptions<Contact, never, "*", never> | undefined) {
     const em = orm.em.fork();
-    return await em.findOneOrFail(User, id, {
+    return await em.findOneOrFail(Contact, id, {
       ...options,
       failHandler: () => new NotFoundError(),
     }

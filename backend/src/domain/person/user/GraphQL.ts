@@ -7,7 +7,7 @@ import {
   GraphQLNonNull,
   GraphQLEnumType,
   GraphQLInputObjectType,
-  GraphQLInterfaceType,
+  GraphQLInterfaceType
 } from 'graphql';
 import { ContactGraphQLType } from '../contact/GraphQL';
 import { GenderEnumGraphQLType, PersonGraphQLInterface } from '../GraphQL';
@@ -37,6 +37,7 @@ export const CreateUserInputType = new GraphQLInputObjectType({
     weight: { type: GraphQLFloat },
     socialNetworks: { type: SocialNetworksInputType },
     password: { type: new GraphQLNonNull(GraphQLString) },
+    
   },
 });
 

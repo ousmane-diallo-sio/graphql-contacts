@@ -34,6 +34,18 @@ export class NotFoundError extends GraphQLContactError {
   }
 }
 
+export class BadRequestError extends GraphQLContactError {
+  constructor(message = "Bad request") {
+    super(message, 400);
+  }
+}
+
+export class InternalServerError extends GraphQLContactError {
+  constructor(message = "Internal server error") {
+    super(message, 500);
+  }
+}
+
 export class ValidationError extends GraphQLContactError {
   constructor(message = "Validation failed") {
     super(message, 400);

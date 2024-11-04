@@ -6,8 +6,7 @@ import { MikroORM } from '@mikro-orm/postgresql';
 import mikroORMConfig from './db/mikro-orm.config';
 import userController from './domain/person/user/Controller';
 import { graphqlHTTP } from 'express-graphql';
-import { schema as graphQLSchema } from './graphql';
-import { graphQLResolvers } from './graphql/resolvers';
+import { graphQLSchema } from './graphql';
 
 console.log('\n---------------------------');
 console.log('📀 Server starting');
@@ -21,7 +20,6 @@ console.log('✅ MikroORM initialized');
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(requestLogger);
 
-
 app.get('/', (req, res) => {
   res.contentType("application/json")
   res.send('Hello World!')
@@ -29,7 +27,6 @@ app.get('/', (req, res) => {
 
 app.use("/graphql", graphqlHTTP({
   schema: graphQLSchema,
-  rootValue: graphQLResolvers,
   graphiql: true
 }))
 
