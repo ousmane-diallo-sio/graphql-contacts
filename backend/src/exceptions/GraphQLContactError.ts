@@ -2,7 +2,7 @@ import { Response } from "express";
 import { formatResponse } from "../lib/utils/response";
 import { ServerMessage } from "../types/response";
 
-export class FedodoError extends Error {
+export class GraphQLContactError extends Error {
   public statusCode: number;
 
   constructor(message: string, statusCode: number) {
@@ -14,7 +14,7 @@ export class FedodoError extends Error {
 
   static sendFormatedResponse(res: Response, error: unknown, args?: { status?: number, message?: string }) {
     console.error(`❌ ${res.req?.method} ${res.req?.url} : \n${error}\n`);
-    if (error instanceof FedodoError) {
+    if (error instanceof GraphQLContactError) {
       return formatResponse(res, { 
         status: error.statusCode, 
         messages: [{ type: "error", message: error.message ?? args?.message ?? "An error occurred" }],
@@ -28,19 +28,19 @@ export class FedodoError extends Error {
 
 }
 
-export class NotFoundError extends FedodoError {
+export class NotFoundError extends GraphQLContactError {
   constructor(message = "Resource not found") {
     super(message, 404);
   }
 }
 
-export class ValidationError extends FedodoError {
+export class ValidationError extends GraphQLContactError {
   constructor(message = "Validation failed") {
     super(message, 400);
   }
 }
 
-export class UnauthorizedError extends FedodoError {
+export class UnauthorizedError extends GraphQLContactError {
   constructor(message = "Unauthorized") {
     super(message, 401);
   }

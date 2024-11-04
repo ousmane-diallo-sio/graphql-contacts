@@ -6,7 +6,7 @@ import { z } from "zod";
 import { omit } from "../../../lib/utils";
 import { ServerMessage } from "../../../types/response";
 import { CreateUserSchema, UpdateUserSchema, UserLoginSchema } from "./ZodSchema";
-import { FedodoError } from "../../../exceptions/FedodoError";
+import { GraphQLContactError } from "../../../exceptions/GraphQLContactError";
 
 const userController = Router();
 
@@ -29,7 +29,7 @@ const getOneById: RequestHandler = async (req, res) => {
 
     return formatResponse(res, { status: 200, data: user });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while fetching user' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while fetching user' });
   }
 };
 
@@ -38,7 +38,7 @@ const getAll: RequestHandler = async (req, res) => {
     const users = await userRepository.findAll();
     return formatResponse(res, { status: 200, data: users });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while fetching users' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while fetching users' });
   }
 };
 
@@ -61,7 +61,7 @@ const createOne: RequestHandler = async (req, res) => {
       jwt
     });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while creating user' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while creating user' });
   }
 };
 
@@ -88,7 +88,7 @@ const updateOne: RequestHandler = async (req, res) => {
     const { data, messages, jwt } = await userRepository.update(id, validation.data);
     return formatResponse(res, { status: 200, data, messages, jwt });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while updating user' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while updating user' });
   }
 }
 
@@ -123,7 +123,7 @@ const login: RequestHandler = async (req, res) => {
       jwt: user.generateToken(),
     });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while logging in' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while logging in' });
   }
 };
 
@@ -142,7 +142,7 @@ const deleteOne: RequestHandler = async (req, res) => {
     await userRepository.delete(id);
     return formatResponse(res, { status: 200, messages: [{ type: "success", message: "User deleted successfully" }] });
   } catch (error) {
-    FedodoError.sendFormatedResponse(res, error, { message: 'An error occured while deleting user' });
+    GraphQLContactError.sendFormatedResponse(res, error, { message: 'An error occured while deleting user' });
   }
 };
 

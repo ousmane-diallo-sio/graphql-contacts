@@ -5,6 +5,9 @@ import bodyParser from 'body-parser';
 import { MikroORM } from '@mikro-orm/postgresql';
 import mikroORMConfig from './db/mikro-orm.config';
 import userController from './domain/person/user/Controller';
+import { graphqlHTTP } from 'express-graphql';
+import { schema as graphQLSchema } from './graphql';
+import { graphQLResolvers } from './graphql/resolvers';
 
 console.log('\n---------------------------');
 console.log('📀 Server starting');
@@ -24,9 +27,14 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use("/user", userController);
+app.use("/graphql", graphqlHTTP({
+  schema: graphQLSchema,
+  rootValue: graphQLResolvers,
+  graphiql: true
+}))
 
 app.use(authErrorHandler);
+
 
 app.listen(EnvConfig.PORT, () => {
   console.log(`✅ Server running at http://${EnvConfig.HOST}:${EnvConfig.PORT}/`);

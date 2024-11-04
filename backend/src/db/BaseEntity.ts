@@ -15,9 +15,9 @@ export abstract class BaseEntity<Optional = never> {
   id: string = uuidv4();
 
   @Property()
-  createdAt = new Date().toUTC();
+  createdAt = new Date();
 
-  @Property({ onUpdate: () => new Date().toUTC() })
-  updatedAt = new Date().toUTC();
+  @Property({ onUpdate: () => new Date() })
+  updatedAt = new Date();
 
 }
