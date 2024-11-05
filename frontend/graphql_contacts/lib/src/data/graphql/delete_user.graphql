@@ -1,7 +1,5 @@
-mutation DeleteUser($id: ID!) {
-  deleteUser(id: $id) {
-    id
-    email
-    name
-  }
-}
+# mutation DeleteUser($id: ID!) {
+#   deleteUser(id: $id) {
+#     id
+#   }
+# }

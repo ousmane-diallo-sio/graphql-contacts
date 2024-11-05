@@ -1,24 +1,13 @@
 
-mutation CreateUser($input: UserInput!) {
-  createUser(input: $input) {
-    id
-    email
-    name
-    address {
-      street
-      city
-      zip
-      country
+mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+        id
+        email
+        name
+        phoneNumber
+        gender
+        height
+        weight
+        password
     }
-    phoneNumber
-    gender
-    height
-    weight
-    socialNetworks {
-      facebookUrl
-      twitterUrl
-      instagramUrl
-      linkedinUrl
-    }
-  }
 }
