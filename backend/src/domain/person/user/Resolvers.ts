@@ -48,7 +48,6 @@ export class UserGraphQLResolver {
 
   async login(args: { email: string, password: string }) : Promise<any> {
     const user = await userRepository.findByEmailForLogin(args.email);
-    console.debug('user', user);
     if (!user.verifyPassword(args.password)) {
       throw new GraphQLContactError('Invalid email or password', 401);
     }

@@ -71,23 +71,23 @@ class UserRepository {
 
   async update(id: string, data: UpdateUserDTO): Promise<any> {
     const em = orm.em.fork();
-    const user = await em.findOneOrFail(User, id, { 
+    const user = await em.findOneOrFail(User, { id: id }, { 
       failHandler: () => new NotFoundError() }
     );
-    
+
     wrap(user).assign(data, { mergeObjectProperties: true });
     await em.persistAndFlush(user);
 
     return {
-      data: user,
+      ...user,
       jwt: user.generateToken()
-    };
+    }
   }
 
   async delete(id: string) {
     const em = orm.em.fork();
-    const userRef = em.getReference(User, id);
-    return await em.removeAndFlush(userRef);
+    console.debug('deleting user', id);
+    return await em.nativeDelete(User, { id });
   }
 
   async findAll(options?: FindAllOptions<User, never, "*", never> | undefined) {
