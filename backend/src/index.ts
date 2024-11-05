@@ -16,13 +16,13 @@ console.log('---------------------------');
 const app = express();
 
 export const orm = await MikroORM.init(mikroORMConfig);
-// await orm.schema.createSchema();
 // const generator = orm.getSchemaGenerator()
+// await generator.clearDatabase()// ensure db exists and is fresh
+// await orm.schema.createSchema();
 // orm.getMigrator().up();
 // await generator.updateSchema();
 //await orm.schema.dropSchema();
 // await generator.dropSchema()// ensure db exists and is freshs
-//await generator.clearDatabase()// ensure db exists and is fresh
 // await generator.createSchema()// create db schema
 
 console.log('✅ MikroORM initialized');

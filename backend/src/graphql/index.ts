@@ -18,8 +18,8 @@ export const graphQLSchema = new GraphQLSchema({
     fields: {
       user: {
         type: UserGraphQLType,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: requireAuth(async (_, { id }) => {
+        resolve: requireAuth(async (_, args, context, info) => {
+          const id = context.auth.id;
           return await UserGraphQLResolver.instance.getUser({ id });
         }),
       },
@@ -27,9 +27,6 @@ export const graphQLSchema = new GraphQLSchema({
         type: ContactGraphQLType,
         args: { id: { type: new GraphQLNonNull(GraphQLID) } },
         resolve: requireAuth(async (_, { id }) => {
-          // TODO : Get jwt from context and extract user id
-          // TODO : Check if user has access to this contact
-          const jwtId = '1';
           return await ContactGraphQLResolver.instance.getContact({ id });
         }),
       },
@@ -72,8 +69,11 @@ export const graphQLSchema = new GraphQLSchema({
       createContact: {
         type: ContactGraphQLType,
         args: { input: { type: new GraphQLNonNull(CreateContactInputType) } },
-        resolve: requireAuth(async (_, { input }) => {
-          return await ContactGraphQLResolver.instance.createContact({ data: input });
+        resolve: requireAuth(async (_, { input }, context, info) => {
+          const userId = context.auth.id;
+          return await ContactGraphQLResolver.instance
+            .createContact({ referalId: userId, data: input })
+            .catch(GraphQLContactError.format);
         }),
       },
       updateContact: {

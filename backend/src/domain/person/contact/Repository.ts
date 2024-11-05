@@ -1,28 +1,51 @@
 import { Contact } from './Entity';
 import { orm } from '../../..';
 import { NotFoundError } from '../../../exceptions/GraphQLContactError';
-import { FindAllOptions, FindOneOrFailOptions, wrap } from '@mikro-orm/core';
+import { FindAllOptions, FindOneOrFailOptions, rel, sql, wrap } from '@mikro-orm/core';
+import { CreateContactDTO } from '.';
+import { User } from '../user/Entity';
+import { Address } from '../../address/Entity';
+import { SocialNetworks } from '../../social-networks/Entity';
+import { omit } from '../../../lib/utils';
+import { BaseEntity } from '../../../BaseEntity';
 
 class ContactRepository {
 
-  async create(data: any): Promise<Contact> {
+  async create(userId: string, data: CreateContactDTO): Promise<Contact | null> {
     const em = orm.em.fork();
-    const contact = new Contact();
-    contact.email = data.email;
-    contact.name = data.name;
-    contact.phoneNumber = data.phoneNumber;
-    contact.gender = data.gender;
-    contact.height = data.height;
-    contact.weight = data.weight;
-    contact.referal = data.referal;
 
-    await em.persistAndFlush(contact);
+    const referal = await em.findOneOrFail(User, { id: userId }, { 
+      failHandler: () => new NotFoundError("Contact referal not found"),
+    });
+    
+    console.debug('referal', referal.id);
+
+    const contact = em.create(Contact, {
+      email: data.email,
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      gender: data.gender,
+      height: data.height,
+      weight: data.weight,
+      address: data.address ? (
+        new Address(data.address.street, data.address.city, data.address.country, data.address.zipCode)
+       ) : undefined,
+      socialNetworks: data.socialNetworks ? (
+        new SocialNetworks(data.socialNetworks.facebookUrl, data.socialNetworks.twitterUrl, data.socialNetworks.instagramUrl, data.socialNetworks.linkedinUrl)
+       ) : undefined,
+      referal: referal.id
+    });
+
+    await em.flush();
+
+    console.debug('contact', contact);
+
     return contact;
   }
 
   async update(id: string, data: any): Promise<Contact> {
     const em = orm.em.fork();
-    const contact = await em.findOneOrFail(Contact, id, { 
+    const contact = await em.findOneOrFail(Contact, {id: id}, { 
       failHandler: () => new NotFoundError() }
     );
     
@@ -33,8 +56,8 @@ class ContactRepository {
 
   async delete(id: string) {
     const em = orm.em.fork();
-    const contactRef = em.getReference(Contact, id);
-    return await em.removeAndFlush(contactRef);
+    console.debug('deleting contact', id);
+    return await em.nativeDelete(Contact, { id });
   }
 
   async findAll(options?: FindAllOptions<Contact, never, "*", never> | undefined) {
@@ -44,7 +67,7 @@ class ContactRepository {
 
   async findById(id: string, options?: FindOneOrFailOptions<Contact, never, "*", never> | undefined) {
     const em = orm.em.fork();
-    return await em.findOneOrFail(Contact, id, {
+    return await em.findOneOrFail(Contact, { id: id }, {
       ...options,
       failHandler: () => new NotFoundError(),
     }

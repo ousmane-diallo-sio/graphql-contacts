@@ -34,7 +34,7 @@ export const CreateContactInputType = new GraphQLInputObjectType({
     height: { type: GraphQLFloat },
     weight: { type: GraphQLFloat },
     socialNetworks: { type: SocialNetworksInputType },
-    referral: { type: new GraphQLNonNull(GraphQLID) },
+    // referral: { type: new GraphQLNonNull(GraphQLID) },
   }),
 });
 
