@@ -1,7 +1,7 @@
 import { PostgreSqlDriver, Options, UnderscoreNamingStrategy, LoadStrategy } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import EnvConfig from '../lib/config/EnvConfig';
-import { $ } from 'bun';
+import { Migrator } from '@mikro-orm/migrations';
 
 const mikroORMConfig: Options = {
   driver: PostgreSqlDriver,
@@ -20,6 +20,7 @@ const mikroORMConfig: Options = {
   metadataProvider: TsMorphMetadataProvider,
   // enable debug mode to log SQL queries and discovery information
   debug: process.env.NODE_ENV !== 'production',
+  extensions: [Migrator],
 };
 
 export default mikroORMConfig;

@@ -4,7 +4,6 @@ import { Address } from '../address/Entity';
 import { SocialNetworks } from '../social-networks/Entity';
 
 @Entity()
-@Unique({ properties: ['email'] })
 export class Person extends BaseEntity {
 
   @Property({ unique: true })

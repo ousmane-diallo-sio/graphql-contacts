@@ -1,7 +1,7 @@
 import { GraphQLFieldConfig, GraphQLFieldResolver, GraphQLID, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLResolveInfo, GraphQLSchema, GraphQLString } from "graphql";
 import { UserGraphQLResolver } from "../domain/person/user/Resolvers";
 import { ContactGraphQLResolver } from "../domain/person/contact/Resolvers";
-import { AuthenticationError } from "../exceptions/GraphQLContactError";
+import { AuthenticationError, GraphQLContactError } from "../exceptions/GraphQLContactError";
 import { CreateUserInputType, UpdateUserInputType, UserGraphQLType } from "../domain/person/user/GraphQL";
 import { ContactGraphQLType, CreateContactInputType, UpdateContactInputType } from "../domain/person/contact/GraphQL";
 
@@ -51,7 +51,7 @@ export const graphQLSchema = new GraphQLSchema({
         type: UserGraphQLType,
         args: { input: { type: new GraphQLNonNull(CreateUserInputType) } },
         resolve: async (_, { input }) => {
-          return await UserGraphQLResolver.instance.createUser({ data: input });
+          return await UserGraphQLResolver.instance.createUser({ data: input }).catch(GraphQLContactError.format);
         },
       },
       updateUser: {
