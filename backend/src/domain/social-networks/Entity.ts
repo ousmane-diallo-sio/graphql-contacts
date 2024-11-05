@@ -1,5 +1,5 @@
 import { Embeddable, Property } from '@mikro-orm/core';
-import { BaseEntity } from '../../db/BaseEntity';
+import { BaseEntity } from '../../BaseEntity';
 
 @Embeddable()
 export class SocialNetworks extends BaseEntity {

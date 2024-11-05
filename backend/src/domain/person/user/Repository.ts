@@ -60,8 +60,8 @@ class UserRepository {
     });
 
     await em.flush();
-
     console.debug('user created, total count', (await this.findAll()).length);
+    omit(user, ['password', 'salt']);
 
     return {
       ...user,

@@ -1,5 +1,5 @@
 import { BeforeCreate, BeforeUpdate, BeforeUpsert, Cascade, Collection, Embedded, Entity, Enum, type EventArgs, OneToMany, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from '../../../db/BaseEntity';
+import { BaseEntity } from '../../../BaseEntity';
 import jwt from "jsonwebtoken";
 import EnvConfig from '../../../lib/config/EnvConfig';
 import crypto from "crypto";
