@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, type Rel, Unique } from '@mikro-orm/core';
+import { Entity, ManyToOne, Property, type Rel, Unique } from '@mikro-orm/core';
 import { Person } from '../Entity';
 import { User } from '../user/Entity';
 

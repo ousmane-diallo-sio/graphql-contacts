@@ -1,8 +1,16 @@
 import { Embeddable, Property } from '@mikro-orm/core';
-import { BaseEntity } from '../../db/BaseEntity';
+import { BaseEntity } from '../../BaseEntity';
 
 @Embeddable()
 export class SocialNetworks extends BaseEntity {
+
+  constructor(facebookUrl?: string, twitterUrl?: string, instagramUrl?: string, linkedinUrl?: string) {
+    super();
+    this.facebookUrl = facebookUrl;
+    this.twitterUrl = twitterUrl;
+    this.instagramUrl = instagramUrl;
+    this.linkedinUrl = linkedinUrl;
+  }
 
   @Property()
   facebookUrl?: string;
@@ -15,9 +23,5 @@ export class SocialNetworks extends BaseEntity {
 
   @Property()
   linkedinUrl?: string;
-
-  get hasAnySocialNetwork() {
-    return this.facebookUrl || this.twitterUrl || this.instagramUrl || this.linkedinUrl;
-  }
 
 }

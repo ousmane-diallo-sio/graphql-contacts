@@ -1,5 +1,4 @@
 import { BeforeCreate, BeforeUpdate, BeforeUpsert, Cascade, Collection, Embedded, Entity, Enum, type EventArgs, OneToMany, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from '../../../db/BaseEntity';
 import jwt from "jsonwebtoken";
 import EnvConfig from '../../../lib/config/EnvConfig';
 import crypto from "crypto";
@@ -9,14 +8,13 @@ import { Person } from '../Entity';
 import { Contact } from '../contact/Entity';
 
 @Entity()
-@Unique({ properties: ['email'] })
 export class User extends Person {
 
   @Property({ hidden: true, lazy: true })
   password!: string;
 
   @Property({ hidden: true, lazy: true })
-  salt!: string;
+  salt!: string
 
   @OneToMany(() => Contact, contact => contact.referal, { cascade: [Cascade.ALL], orphanRemoval: true })
   contacts = new Collection<Contact>(this);

@@ -1,10 +1,10 @@
 import { Embedded, Entity, Enum, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from '../../db/BaseEntity';
+
 import { Address } from '../address/Entity';
 import { SocialNetworks } from '../social-networks/Entity';
+import { BaseEntity } from '../../BaseEntity';
 
 @Entity()
-@Unique({ properties: ['email'] })
 export class Person extends BaseEntity {
 
   @Property({ unique: true })
