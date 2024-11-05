@@ -1,23 +1,23 @@
-# query Contacts {
-#     contacts {
-#         id
-#         email
-#         name
-#         phoneNumber
-#         gender
-#         height
-#         weight
-#         address {
-#             street
-#             city
-#             zipCode
-#             country
-#         }
-#         socialNetworks {
-#             facebookUrl
-#             twitterUrl
-#             instagramUrl
-#             linkedinUrl
-#         }
-#     }
-# }
+query Contacts {
+    contacts {
+        id
+        email
+        name
+        phoneNumber
+        gender
+        height
+        weight
+        address {
+            street
+            city
+            zipCode
+            country
+        }
+        socialNetworks {
+            facebookUrl
+            twitterUrl
+            instagramUrl
+            linkedinUrl
+        }
+    }
+}
