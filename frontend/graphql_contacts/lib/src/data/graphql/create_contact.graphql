@@ -7,5 +7,17 @@ mutation CreateContact($input: CreateContactInput!) {
         gender
         height
         weight
+        address {
+            street
+            city
+            zipCode
+            country
+        }
+        socialNetworks {
+            facebookUrl
+            twitterUrl
+            instagramUrl
+            linkedinUrl
+        }
     }
 }

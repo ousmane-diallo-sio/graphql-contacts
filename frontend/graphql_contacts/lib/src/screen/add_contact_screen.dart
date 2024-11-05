@@ -39,7 +39,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
         zipController.text.isEmpty ||
         countryController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez remplir correctement tous les champs')),
+        const SnackBar(
+            content: Text('Veuillez remplir correctement tous les champs')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -79,7 +80,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   border: OutlineInputBorder(),
                 ),
                 items: ['MALE', 'FEMALE', 'UNKNOWN']
-                    .map((gender) => DropdownMenuItem(value: gender, child: Text(gender)))
+                    .map((gender) =>
+                        DropdownMenuItem(value: gender, child: Text(gender)))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -101,7 +103,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                         border: OutlineInputBorder(),
                       ),
                       items: ['Mobile', 'Fixe', 'Autre']
-                          .map((type) => DropdownMenuItem(value: type, child: Text(type)))
+                          .map((type) =>
+                              DropdownMenuItem(value: type, child: Text(type)))
                           .toList(),
                       onChanged: (value) {
                         setState(() {
@@ -125,7 +128,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                 ],
               ),
               const SizedBox(height: 16.0),
-              _buildTextField(emailController, 'Email', Icons.email, inputType: TextInputType.emailAddress),
+              _buildTextField(emailController, 'Email', Icons.email,
+                  inputType: TextInputType.emailAddress),
               const SizedBox(height: 16.0),
 
               // Section: Adresse
@@ -133,25 +137,33 @@ class _AddContactScreenState extends State<AddContactScreen> {
               const SizedBox(height: 16.0),
               _buildTextField(cityController, 'Ville', Icons.location_city),
               const SizedBox(height: 16.0),
-              _buildTextField(zipController, 'Code postal', Icons.local_post_office),
+              _buildTextField(
+                  zipController, 'Code postal', Icons.local_post_office),
               const SizedBox(height: 16.0),
               _buildTextField(countryController, 'Pays', Icons.public),
               const SizedBox(height: 16.0),
 
               // Section: Attributs Physiques
-              _buildTextField(heightController, 'Taille (en cm)', Icons.height, inputType: TextInputType.number),
+              _buildTextField(heightController, 'Taille (en cm)', Icons.height,
+                  inputType: TextInputType.number),
               const SizedBox(height: 16.0),
-              _buildTextField(weightController, 'Poids (en kg)', Icons.fitness_center, inputType: TextInputType.number),
+              _buildTextField(
+                  weightController, 'Poids (en kg)', Icons.fitness_center,
+                  inputType: TextInputType.number),
               const SizedBox(height: 16.0),
 
               // Section: Réseaux Sociaux
-              _buildTextField(facebookController, 'Facebook URL', Icons.facebook),
+              _buildTextField(
+                  facebookController, 'Facebook URL', Icons.facebook),
               const SizedBox(height: 16.0),
-              _buildTextField(twitterController, 'Twitter URL', Icons.add_card_rounded),
+              _buildTextField(
+                  twitterController, 'Twitter URL', Icons.add_card_rounded),
               const SizedBox(height: 16.0),
-              _buildTextField(instagramController, 'Instagram URL', Icons.camera_alt),
+              _buildTextField(
+                  instagramController, 'Instagram URL', Icons.camera_alt),
               const SizedBox(height: 16.0),
-              _buildTextField(linkedinController, 'LinkedIn URL', Icons.business),
+              _buildTextField(
+                  linkedinController, 'LinkedIn URL', Icons.business),
               const SizedBox(height: 24.0),
 
               // Submit Button
@@ -160,7 +172,8 @@ class _AddContactScreenState extends State<AddContactScreen> {
                 icon: const Icon(Icons.save),
                 label: const Text("Ajouter le contact"),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 12.0),
                   textStyle: const TextStyle(fontSize: 16.0),
                 ),
               ),
@@ -171,7 +184,9 @@ class _AddContactScreenState extends State<AddContactScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String labelText, IconData icon, {TextInputType inputType = TextInputType.text}) {
+  Widget _buildTextField(
+      TextEditingController controller, String labelText, IconData icon,
+      {TextInputType inputType = TextInputType.text}) {
     return TextField(
       controller: controller,
       keyboardType: inputType,
