@@ -4,9 +4,10 @@ import { authErrorHandler, graphqljwt, jwt, requestLogger } from './lib/middlewa
 import bodyParser from 'body-parser';
 import { MikroORM } from '@mikro-orm/postgresql';
 import mikroORMConfig from './db/mikro-orm.config';
-import userController from './domain/person/user/Controller';
 import { graphqlHTTP } from 'express-graphql';
 import { graphQLSchema } from './graphql';
+import { userRepository } from './domain/person/user/Repository';
+import { GenderEnum } from './domain/person/Entity';
 
 console.log('\n---------------------------');
 console.log('📀 Server starting');
@@ -15,6 +16,15 @@ console.log('---------------------------');
 const app = express();
 
 export const orm = await MikroORM.init(mikroORMConfig);
+// await orm.schema.createSchema();
+// const generator = orm.getSchemaGenerator()
+// orm.getMigrator().up();
+// await generator.updateSchema();
+//await orm.schema.dropSchema();
+// await generator.dropSchema()// ensure db exists and is freshs
+//await generator.clearDatabase()// ensure db exists and is fresh
+// await generator.createSchema()// create db schema
+
 console.log('✅ MikroORM initialized');
 
 app.use(bodyParser.json({ limit: '50mb' }));

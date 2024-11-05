@@ -13,37 +13,58 @@ class UserRepository {
   async create(data: CreateUserDTO): Promise<any> {
     const em = orm.em.fork();
 
-    const user = new User();
-    user.email = data.email;
-    user.name = data.name;
-    user.phoneNumber = data.phoneNumber;
-    user.gender = data.gender;
-    user.height = data.height;
-    user.weight = data.weight;
-    user.password = data.password;
+    // const user = new User();
+    // user.email = data.email;
+    // user.name = data.name;
+    // user.phoneNumber = data.phoneNumber;
+    // user.gender = data.gender;
+    // user.height = data.height;
+    // user.weight = data.weight;
+    // user.password = data.password;
 
-    if (data.address) {
-      const address = new Address();
-      address.country = data.address.country;
-      address.city = data.address.city;
-      address.street = data.address.street;
-      address.zipCode = data.address.zipCode;
-      user.address = address;
-    }
+    // if (data.address) {
+    //   const address = new Address();
+    //   address.country = data.address.country;
+    //   address.city = data.address.city;
+    //   address.street = data.address.street;
+    //   address.zipCode = data.address.zipCode;
+    //   user.address = address;
+    // }
 
-    if (user.socialNetworks) {
-      const socialNetworks = new SocialNetworks();
-      socialNetworks.facebookUrl = data.socialNetworks?.facebookUrl;
-      socialNetworks.twitterUrl = data.socialNetworks?.twitterUrl;
-      socialNetworks.instagramUrl = data.socialNetworks?.instagramUrl;
-      socialNetworks.linkedinUrl = data.socialNetworks?.linkedinUrl;
-      user.socialNetworks = socialNetworks;
-    }
+    // if (user.socialNetworks) {
+    //   const socialNetworks = new SocialNetworks();
+    //   socialNetworks.facebookUrl = data.socialNetworks?.facebookUrl;
+    //   socialNetworks.twitterUrl = data.socialNetworks?.twitterUrl;
+    //   socialNetworks.instagramUrl = data.socialNetworks?.instagramUrl;
+    //   socialNetworks.linkedinUrl = data.socialNetworks?.linkedinUrl;
+    //   user.socialNetworks = socialNetworks;
+    // }
 
-    await em.persistAndFlush(user);
+    // await em.persistAndFlush(user);
+
+    const user = em.create(User, {
+      email: data.email,
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      gender: data.gender,
+      height: data.height,
+      weight: data.weight,
+      password: data.password,
+      address: data.address ? (
+        new Address(data.address.street, data.address.city, data.address.country, data.address.zipCode)
+       ) : undefined,
+      socialNetworks: data.socialNetworks ? (
+        new SocialNetworks(data.socialNetworks.facebookUrl, data.socialNetworks.twitterUrl, data.socialNetworks.instagramUrl, data.socialNetworks.linkedinUrl)
+       ) : undefined,
+       salt: 'will be defined later'
+    });
+
+    await em.flush();
+
+    console.debug('user created, total count', (await this.findAll()).length);
 
     return {
-      data: user,
+      ...user,
       jwt: user.generateToken()
     };
   }

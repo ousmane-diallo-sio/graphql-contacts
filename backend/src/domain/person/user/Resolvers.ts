@@ -16,10 +16,13 @@ export class UserGraphQLResolver {
   async createUser(args: { data: unknown }) {
     const validation = CreateUserSchema.safeParse(args.data);
     if (!validation.success) {
+      console.error(this.createUser.name, validation.error.errors);
       throw new BadRequestError(validation.error.errors[0].message);
     }
 
-    return await userRepository.create(validation.data);
+    const res = await userRepository.create(validation.data);
+    console.log('User created', res);
+    return res
   }
 
   async updateUser(args: { id: string, data: unknown }) {

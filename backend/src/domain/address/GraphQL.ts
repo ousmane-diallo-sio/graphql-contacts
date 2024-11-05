@@ -10,7 +10,7 @@ export const AddressGraphQLType = new GraphQLObjectType({
   fields: {
     street: { type: new GraphQLNonNull(GraphQLString) },
     city: { type: new GraphQLNonNull(GraphQLString) },
-    zip: { type: new GraphQLNonNull(GraphQLString) },
+    zipCode: { type: new GraphQLNonNull(GraphQLString) },
     country: { type: new GraphQLNonNull(GraphQLString) },
   },
 });
@@ -20,7 +20,7 @@ export const AddressInputType = new GraphQLInputObjectType({
   fields: {
     street: { type: new GraphQLNonNull(GraphQLString) },
     city: { type: new GraphQLNonNull(GraphQLString) },
-    zip: { type: new GraphQLNonNull(GraphQLString) },
+    zipCode: { type: new GraphQLNonNull(GraphQLString) },
     country: { type: new GraphQLNonNull(GraphQLString) },
   },
 });

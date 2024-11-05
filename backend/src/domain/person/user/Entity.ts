@@ -9,14 +9,13 @@ import { Person } from '../Entity';
 import { Contact } from '../contact/Entity';
 
 @Entity()
-@Unique({ properties: ['email'] })
 export class User extends Person {
 
   @Property({ hidden: true, lazy: true })
   password!: string;
 
   @Property({ hidden: true, lazy: true })
-  salt!: string;
+  salt!: string
 
   @OneToMany(() => Contact, contact => contact.referal, { cascade: [Cascade.ALL], orphanRemoval: true })
   contacts = new Collection<Contact>(this);

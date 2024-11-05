@@ -20,8 +20,8 @@ const UserGraphQLType: GraphQLObjectType = new GraphQLObjectType({
   fields: () => ({
     ...PersonGraphQLInterfaceFields,
     password: { type: new GraphQLNonNull(GraphQLString) },
-    salt: { type: new GraphQLNonNull(GraphQLString) },
     contacts: { type: new GraphQLList(ContactGraphQLType) },
+    jwt: { type: GraphQLString }
   }),
 });
 
@@ -37,7 +37,6 @@ export const CreateUserInputType = new GraphQLInputObjectType({
     weight: { type: GraphQLFloat },
     socialNetworks: { type: SocialNetworksInputType },
     password: { type: new GraphQLNonNull(GraphQLString) },
-    
   },
 });
 

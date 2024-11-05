@@ -1,7 +1,7 @@
 type Address {
   street: String!
   city: String!
-  zip: String!
+  zipCode: String!
   country: String!
 }
 
@@ -54,7 +54,6 @@ type User implements Person {
   weight: Float
   socialNetworks: SocialNetworks
   password: String!
-  salt: String!
   contacts: [Contact!]!
 }
 
@@ -69,7 +68,7 @@ type Query {
 input AddressInput {
   street: String!
   city: String!
-  zip: String!
+  zipCode: String!
   country: String!
 }
 
