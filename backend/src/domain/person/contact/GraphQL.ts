@@ -19,7 +19,7 @@ export const ContactGraphQLType: GraphQLObjectType = new GraphQLObjectType({
   interfaces: [PersonGraphQLInterface],
   fields: () => ({
     ...PersonGraphQLInterfaceFields,
-    referral: { type: new GraphQLNonNull(UserGraphQLType) },
+    // referral: { type: new GraphQLNonNull(UserGraphQLType) }, exists but not needed
   }),
 });
 

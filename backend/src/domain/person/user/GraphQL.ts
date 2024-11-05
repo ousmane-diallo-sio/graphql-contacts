@@ -42,7 +42,6 @@ export const CreateUserInputType = new GraphQLInputObjectType({
 export const UpdateUserInputType = new GraphQLInputObjectType({
   name: 'UpdateUserInput',
   fields: {
-    email: { type: GraphQLString },
     name: { type: GraphQLString },
     address: { type: AddressInputType },
     phoneNumber: { type: GraphQLString },
@@ -50,7 +49,7 @@ export const UpdateUserInputType = new GraphQLInputObjectType({
     height: { type: GraphQLFloat },
     weight: { type: GraphQLFloat },
     socialNetworks: { type: SocialNetworksInputType },
-    password: { type: GraphQLString },
+    // password: { type: GraphQLString },
   },
 });
 
