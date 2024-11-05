@@ -36,12 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Inscription"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -71,6 +65,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                   textStyle: const TextStyle(fontSize: 16.0),
                 ),
+              ),
+              const SizedBox(height: 16.0),
+              TextButton(
+                onPressed: () {
+                },
+                child: const Text('Déjà un compte ? Connectez-vous'),
               ),
             ],
           ),
