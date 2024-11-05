@@ -10,7 +10,6 @@ import '../screen/add_contact_screen.dart';
 import '../screen/profile_screen.dart';
 import 'package:graphql_contacts/src/screen/settings_screen.dart';
 
-
 part 'router.g.dart';
 
 @riverpod
@@ -18,7 +17,7 @@ GoRouter router(RouterRef ref) {
   final appStartupState = ref.watch(appStartupProvider);
   return GoRouter(
     routes: $appRoutes,
-    initialLocation: '/home',
+    initialLocation: '/register',
     errorBuilder: (_, __) => const NotFoundScreen(),
     redirect: (_, state) {
       if (appStartupState.isLoading || appStartupState.hasError) {
@@ -74,7 +73,7 @@ class ConnexionScreenRoute extends GoRouteData {
 }
 
 @TypedGoRoute<ProfileScreenRoute>(
-    path: '/profile',
+  path: '/profile',
 )
 @immutable
 class ProfileScreenRoute extends GoRouteData {
@@ -87,7 +86,7 @@ class ProfileScreenRoute extends GoRouteData {
 }
 
 @TypedGoRoute<SettingsScreenRoute>(
-    path: '/settings',
+  path: '/settings',
 )
 @immutable
 class SettingsScreenRoute extends GoRouteData {
@@ -100,7 +99,7 @@ class SettingsScreenRoute extends GoRouteData {
 }
 
 @TypedGoRoute<RegisterScreenRoute>(
-    path: '/register',
+  path: '/register',
 )
 @immutable
 class RegisterScreenRoute extends GoRouteData {
@@ -113,7 +112,7 @@ class RegisterScreenRoute extends GoRouteData {
 }
 
 @TypedGoRoute<AddContactScreenRoute>(
-    path: '/add-contact',
+  path: '/add-contact',
 )
 @immutable
 class AddContactScreenRoute extends GoRouteData {
