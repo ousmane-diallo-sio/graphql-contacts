@@ -1,7 +1,8 @@
 import { Embedded, Entity, Enum, Property, Unique } from '@mikro-orm/core';
-import { BaseEntity } from '../../BaseEntity';
+
 import { Address } from '../address/Entity';
 import { SocialNetworks } from '../social-networks/Entity';
+import { BaseEntity } from '../../BaseEntity';
 
 @Entity()
 export class Person extends BaseEntity {

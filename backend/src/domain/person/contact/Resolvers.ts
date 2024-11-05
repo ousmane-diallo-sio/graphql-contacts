@@ -17,13 +17,13 @@ export class ContactGraphQLResolver {
     return await contactRepository.findAll({ where: { referal: args.id } });
   }
 
-  async createContact(args: { data: unknown }) {
+  async createContact(args: { referalId: string, data: unknown }) {
     const validation = CreateContactSchema.safeParse(args.data);
     if (!validation.success) {
       throw new BadRequestError(validation.error.errors[0].message);
     }
 
-    return await contactRepository.create(validation.data);
+    return await contactRepository.create(args.referalId, validation.data);
   }
 
   async updateContact(args: { id: string, data: unknown }) {
@@ -35,8 +35,8 @@ export class ContactGraphQLResolver {
     return await contactRepository.update(args.id, validation.data);
   }
 
-  async deleteContact(args: { id: string }) {
-    return await contactRepository.delete(args.id);
+  async deleteContact(args: { id: string, userId: string }) {
+    return await contactRepository.delete(args.userId, args.id);
   }
 
 }

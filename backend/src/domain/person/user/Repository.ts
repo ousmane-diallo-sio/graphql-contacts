@@ -79,7 +79,7 @@ class UserRepository {
     await em.persistAndFlush(user);
 
     return {
-      ...user,
+      ...await em.findOneOrFail(User, { id: id }),
       jwt: user.generateToken()
     }
   }
@@ -97,7 +97,7 @@ class UserRepository {
 
   async findById(id: string, options?: FindOneOrFailOptions<User, never, "*", never> | undefined) {
     const em = orm.em.fork();
-    return await em.findOneOrFail(User, id, {
+    return await em.findOneOrFail(User, { id }, {
       ...options,
       failHandler: () => new NotFoundError(),
     }
@@ -111,6 +111,16 @@ class UserRepository {
       fields: ['id', 'email', 'password', 'salt'],
       failHandler: () => new NotFoundError(),
     });
+  }
+
+  async getAllContacts(id: string) {
+    const em = orm.em.fork();
+    const user = await em.findOneOrFail(User, { id }, { 
+      failHandler: () => new NotFoundError("User not found"),
+      populate: ['contacts']
+    });
+
+    return user.contacts.getItems();
   }
 }
 

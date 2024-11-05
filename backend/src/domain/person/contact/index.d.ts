@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { NightTime } from "../night-time";
-import { CreateUserSchema, UpdateUserSchema } from "./ZodSchema";
+import { CreateContactSchema, CreateUserSchema, UpdateContactSchema, UpdateUserSchema } from "./ZodSchema";
 
-export type CreateUserDTO = z.infer<typeof CreateUserSchema>;
+export type CreateContactDTO = z.infer<typeof CreateContactSchema>;
 
-export type UpdateUserDTO = z.infer<typeof UpdateUserSchema>;
+export type UpdateContactDTO = z.infer<typeof UpdateContactSchema>;

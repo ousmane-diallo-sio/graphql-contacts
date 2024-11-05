@@ -12,7 +12,6 @@ export const CreateContactSchema = z.object({
   height: z.number().optional(),
   weight: z.number().optional(),
   socialNetworks: SocialNetworksSchema.optional(),
-  referral: z.string()
 });
 
 export const UpdateContactSchema = CreateContactSchema.partial();
