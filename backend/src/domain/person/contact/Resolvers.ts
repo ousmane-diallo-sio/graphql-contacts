@@ -35,8 +35,8 @@ export class ContactGraphQLResolver {
     return await contactRepository.update(args.id, validation.data);
   }
 
-  async deleteContact(args: { id: string }) {
-    return await contactRepository.delete(args.id);
+  async deleteContact(args: { id: string, userId: string }) {
+    return await contactRepository.delete(args.userId, args.id);
   }
 
 }

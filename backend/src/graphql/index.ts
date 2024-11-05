@@ -32,10 +32,9 @@ export const graphQLSchema = new GraphQLSchema({
       },
       contacts: {
         type: new GraphQLList(ContactGraphQLType),
-        resolve: requireAuth(async () => {
-          // TODO : Get jwt from context and extract user id
-          const jwtId = '1';
-          return await ContactGraphQLResolver.instance.getAllContacts({ id: jwtId });
+        resolve: requireAuth(async (_, args, context, info) => {
+          const userId = context.auth.id;
+          return await ContactGraphQLResolver.instance.getAllContacts({ id: userId });
         }),
       },
     },
@@ -62,7 +61,7 @@ export const graphQLSchema = new GraphQLSchema({
         type: GraphQLString,
         resolve: requireAuth(async (source, args, context, info) => {
           const userId = context.auth.id;
-          await UserGraphQLResolver.instance.deleteUser({ id: userId });
+          await UserGraphQLResolver.instance.deleteUser({ id: userId }).catch(GraphQLContactError.format);
           return 'User deleted';
         }),
       },
@@ -79,18 +78,17 @@ export const graphQLSchema = new GraphQLSchema({
       updateContact: {
         type: ContactGraphQLType,
         args: { input: { type: new GraphQLNonNull(UpdateContactInputType) }},
-        resolve: requireAuth(async (_, { input }) => {
-          // TODO : Get jwt from context and extract user id
-          const jwtId = '1';
-          return await ContactGraphQLResolver.instance.updateContact({ id: jwtId, data: input });
+        resolve: requireAuth(async (_, { input }, context, info) => {
+          const userId = context.auth.id;
+          return await ContactGraphQLResolver.instance.updateContact({ id: userId, data: input }).catch(GraphQLContactError.format);
         }),
       },
       deleteContact: {
         type: GraphQLString,
-        resolve: requireAuth(async (_, { }) => {
-          // TODO : Get jwt from context and extract user id
-          const jwtId = '1';
-          await ContactGraphQLResolver.instance.deleteContact({ id: jwtId });
+        args: { input: { type: new GraphQLNonNull(GraphQLID) } },
+        resolve: requireAuth(async (_, { input }, context, info) => {
+          const userId = context.auth.id;
+          await ContactGraphQLResolver.instance.deleteContact({ userId: userId, id: input }).catch(GraphQLContactError.format);
           return 'Contact deleted';
         }),
       },

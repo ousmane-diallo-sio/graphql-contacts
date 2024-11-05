@@ -8,10 +8,11 @@ import { Address } from '../../address/Entity';
 import { SocialNetworks } from '../../social-networks/Entity';
 import { omit } from '../../../lib/utils';
 import { BaseEntity } from '../../../BaseEntity';
+import { v4 as uuidv4 } from 'uuid';
 
 class ContactRepository {
 
-  async create(userId: string, data: CreateContactDTO): Promise<Contact | null> {
+  async create(userId: string, data: CreateContactDTO): Promise<any> {
     const em = orm.em.fork();
 
     const referal = await em.findOneOrFail(User, { id: userId }, { 
@@ -20,26 +21,35 @@ class ContactRepository {
     
     console.debug('referal', referal.id);
 
-    const contact = em.create(Contact, {
-      email: data.email,
-      name: data.name,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      height: data.height,
-      weight: data.weight,
-      address: data.address ? (
-        new Address(data.address.street, data.address.city, data.address.country, data.address.zipCode)
-       ) : undefined,
-      socialNetworks: data.socialNetworks ? (
-        new SocialNetworks(data.socialNetworks.facebookUrl, data.socialNetworks.twitterUrl, data.socialNetworks.instagramUrl, data.socialNetworks.linkedinUrl)
-       ) : undefined,
-      referal: referal.id
-    });
+    const contactId = uuidv4();
+    const addressId = data.address ? uuidv4() : null;
+    const socialNetworksId = data.socialNetworks ? uuidv4() : null;
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
 
-    await em.flush();
+    const sql = `
+      INSERT INTO "contact" (
+        "id", "created_at", "updated_at", "email", "name", "address_id", 
+        "address_created_at", "address_updated_at", "address_street", 
+        "address_city", "address_country", "address_zip_code", "phone_number", 
+        "gender", "height", "weight", "social_networks_id", 
+        "social_networks_created_at", "social_networks_updated_at", 
+        "social_networks_twitter_url", "referal_id"
+      ) VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      );
+    `;
 
-    console.debug('contact', contact);
+    const params = [
+      contactId, createdAt, updatedAt, data.email, data.name, addressId, 
+      createdAt, updatedAt, data.address?.street, data.address?.city, 
+      data.address?.country, data.address?.zipCode, data.phoneNumber, 
+      data.gender, data.height, data.weight, socialNetworksId, createdAt, 
+      updatedAt, data.socialNetworks?.twitterUrl, referal.id
+    ];
 
+    await em.getConnection().execute(sql, params);
+    const contact = await em.findOneOrFail(Contact, { id: contactId });
     return contact;
   }
 
@@ -54,10 +64,10 @@ class ContactRepository {
     return contact;
   }
 
-  async delete(id: string) {
+  async delete(userId: string, id: string) {
     const em = orm.em.fork();
-    console.debug('deleting contact', id);
-    return await em.nativeDelete(Contact, { id });
+    console.debug(`deleting contact ${id} where referal is`, userId);
+    return await em.nativeDelete(Contact, { id, referal: userId });
   }
 
   async findAll(options?: FindAllOptions<Contact, never, "*", never> | undefined) {
