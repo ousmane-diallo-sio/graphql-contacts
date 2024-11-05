@@ -1,7 +1,9 @@
+import { GraphQLResolveInfo } from "graphql";
 import { BadRequestError, GraphQLContactError } from "../../../exceptions/GraphQLContactError";
 import { userRepository } from "./Repository";
 import { CreateUserSchema, UpdateUserSchema } from "./ZodSchema";
-
+import { parseResolveInfo } from "graphql-parse-resolve-info";
+import { omit } from "../../../lib/utils";
 
 export class UserGraphQLResolver {
 
@@ -13,7 +15,7 @@ export class UserGraphQLResolver {
     return await userRepository.findById(args.id);
   }
 
-  async createUser(args: { data: unknown }) {
+  async createUser(args: { data: unknown, info: GraphQLResolveInfo }) {
     const validation = CreateUserSchema.safeParse(args.data);
     if (!validation.success) {
       console.error(this.createUser.name, validation.error.errors);
@@ -22,6 +24,12 @@ export class UserGraphQLResolver {
 
     const res = await userRepository.create(validation.data);
     console.log('User created', res);
+
+    // const parsedInfo = parseResolveInfo(args.info);
+    // console.debug('---------------------------');
+    // console.debug('info', parsedInfo);
+    // console.debug('---------------------------');
+
     return res
   }
 
@@ -38,15 +46,13 @@ export class UserGraphQLResolver {
     return await userRepository.delete(args.id);
   }
 
-  async login(args: { email: string, password: string }) {
+  async login(args: { email: string, password: string }) : Promise<any> {
     const user = await userRepository.findByEmailForLogin(args.email);
+    console.debug('user', user);
     if (!user.verifyPassword(args.password)) {
       throw new GraphQLContactError('Invalid email or password', 401);
     }
-    return {
-      data: user,
-      jwt: user.generateToken()
-    }
+    return user.generateToken();
   }
 
 }

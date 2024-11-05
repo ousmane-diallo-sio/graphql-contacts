@@ -50,8 +50,8 @@ export const graphQLSchema = new GraphQLSchema({
       createUser: {
         type: UserGraphQLType,
         args: { input: { type: new GraphQLNonNull(CreateUserInputType) } },
-        resolve: async (_, { input }) => {
-          return await UserGraphQLResolver.instance.createUser({ data: input }).catch(GraphQLContactError.format);
+        resolve: async (_, { input }, context, info) => {
+          return await UserGraphQLResolver.instance.createUser({ data: input, info }).catch(GraphQLContactError.format);
         },
       },
       updateUser: {
@@ -104,7 +104,7 @@ export const graphQLSchema = new GraphQLSchema({
           password: { type: new GraphQLNonNull(GraphQLString) },
         },
         resolve: async (_, { email, password }) => {
-          return await UserGraphQLResolver.instance.login({ email, password });
+          return await UserGraphQLResolver.instance.login({ email, password }).catch(GraphQLContactError.format);
         },
       },
     },

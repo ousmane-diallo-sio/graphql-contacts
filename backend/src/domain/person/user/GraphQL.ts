@@ -19,7 +19,6 @@ const UserGraphQLType: GraphQLObjectType = new GraphQLObjectType({
   interfaces: [PersonGraphQLInterface],
   fields: () => ({
     ...PersonGraphQLInterfaceFields,
-    password: { type: new GraphQLNonNull(GraphQLString) },
     contacts: { type: new GraphQLList(ContactGraphQLType) },
     jwt: { type: GraphQLString }
   }),

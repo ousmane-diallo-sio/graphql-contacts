@@ -1,5 +1,5 @@
 import { Embeddable, Property } from '@mikro-orm/core';
-import { BaseEntity } from '../../db/BaseEntity';
+import { BaseEntity } from '../../BaseEntity';
 
 @Embeddable()
 export class Address extends BaseEntity {
