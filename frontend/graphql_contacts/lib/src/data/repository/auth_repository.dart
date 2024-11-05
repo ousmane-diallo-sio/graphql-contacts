@@ -38,7 +38,7 @@ class AuthRepository {
     final response = await ferryClient.request(request).first;
     final data = response.data;
     final jwt = data?.login;
-    if (jwt == null) throw Exception("No jwt");
+    if (jwt == null) throw Exception("Identifiants incorrectes");
     await jwtRepository.createJwt(jwt);
     ref.invalidateSelf();
   }
