@@ -104,7 +104,7 @@ export const graphQLSchema = new GraphQLSchema({
           password: { type: new GraphQLNonNull(GraphQLString) },
         },
         resolve: async (_, { email, password }) => {
-          return await UserGraphQLResolver.instance.login({ email, password });
+          return await UserGraphQLResolver.instance.login({ email, password }).catch(GraphQLContactError.format);
         },
       },
     },

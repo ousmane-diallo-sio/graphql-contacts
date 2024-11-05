@@ -108,6 +108,7 @@ class UserRepository {
     const em = orm.em.fork();
     return await em.findOneOrFail(User, { email }, {
       ...options,
+      fields: ['id', 'email', 'password', 'salt'],
       failHandler: () => new NotFoundError(),
     });
   }
