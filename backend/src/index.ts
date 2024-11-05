@@ -19,11 +19,6 @@ export const orm = await MikroORM.init(mikroORMConfig);
 // const generator = orm.getSchemaGenerator()
 // await generator.clearDatabase()// ensure db exists and is fresh
 // await orm.schema.createSchema();
-// orm.getMigrator().up();
-// await generator.updateSchema();
-//await orm.schema.dropSchema();
-// await generator.dropSchema()// ensure db exists and is freshs
-// await generator.createSchema()// create db schema
 
 console.log('✅ MikroORM initialized');
 
@@ -37,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.use(graphqljwt);
 
-app.use("/graphql", graphqlHTTP({ schema: graphQLSchema, graphiql: true }))
+app.use("/graphql", graphqlHTTP({ schema: graphQLSchema, graphiql: true }));
 
 app.use(authErrorHandler);
 
