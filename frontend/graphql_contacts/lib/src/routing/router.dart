@@ -17,7 +17,7 @@ GoRouter router(RouterRef ref) {
   final appStartupState = ref.watch(appStartupProvider);
   return GoRouter(
     routes: $appRoutes,
-    initialLocation: '/register',
+    initialLocation: '/connexion',
     errorBuilder: (_, __) => const NotFoundScreen(),
     redirect: (_, state) {
       if (appStartupState.isLoading || appStartupState.hasError) {

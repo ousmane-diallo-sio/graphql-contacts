@@ -13,16 +13,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'user_remote_repository.g.dart';
 
 @riverpod
-UserRemoteDataSource userRemoteDataSourceProvider(
-  UserRemoteDataSourceProviderRef ref,
+UserRemoteRepository userRemoteRepository(
+  UserRemoteRepositoryRef ref,
 ) {
-  return UserRemoteDataSource(
+  return UserRemoteRepository(
     ferryClient: ref.watch(ferryClientProvider).requireValue,
   );
 }
 
-class UserRemoteDataSource {
-  UserRemoteDataSource({required this.ferryClient});
+class UserRemoteRepository {
+  UserRemoteRepository({required this.ferryClient});
   final Client ferryClient;
 
   // Future<UserModel> getUser({
@@ -50,15 +50,18 @@ class UserRemoteDataSource {
   Future<UserModel> createUser({
     required UserModel user,
   }) async {
+    print("INPUT: ${GCreateUserInput.fromJson(user.toJson())}");
     final request = GCreateUserReq(
       (b) =>
           b..vars.input = GCreateUserInput.fromJson(user.toJson())?.toBuilder(),
     );
     final response = await ferryClient.request(request).first;
+    print("ERROR: ${response.graphqlErrors}");
+    print("ERROR: ${response.linkException}");
     final data = response.data;
     if (response.hasErrors) throw const UnknownException();
     if (data == null) throw const DataNotFoundException();
-    return UserModel.fromJson(data.createUser.toJson());
+    return UserModel.fromJson(data.createUser?.toJson() ?? {});
   }
 
   // Future<UserModel> updateUser({

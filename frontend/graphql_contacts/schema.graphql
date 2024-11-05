@@ -1,13 +1,13 @@
-# """Exposes a URL that specifies the behavior of this scalar."""
-# directive @specifiedBy(
-#   """The URL that specifies the behavior of this scalar."""
-#   url: String!
-# ) on SCALAR
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
 
-# """
-# Indicates exactly one field must be supplied and this field must not be `null`.
-# """
-# directive @oneOf on INPUT_OBJECT
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
 
 type Address {
   street: String!

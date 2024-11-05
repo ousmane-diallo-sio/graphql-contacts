@@ -1,6 +1,5 @@
-
 mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
+  createUser(input: $input) {
         id
         email
         name
@@ -8,6 +7,27 @@ mutation CreateUser($input: CreateUserInput!) {
         gender
         height
         weight
-        password
+        address {
+            street
+            city
+            zipCode
+            country
+        }
+        socialNetworks {
+            facebookUrl
+            twitterUrl
+            instagramUrl
+            linkedinUrl
+        }
+        contacts {
+            id
+            email
+            name
+            phoneNumber
+            gender
+            height
+            weight
+        }
+        jwt
     }
 }

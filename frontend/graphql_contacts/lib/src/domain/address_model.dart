@@ -9,7 +9,7 @@ class AddressModel with _$AddressModel {
   const factory AddressModel({
     @JsonKey(name: 'street') required String street,
     @JsonKey(name: 'city') required String city,
-    @JsonKey(name: 'zip') required String zip,
+    @JsonKey(name: 'zipCode') required String zipCode,
     @JsonKey(name: 'country') required String country,
   }) = _AddressModel;
 
