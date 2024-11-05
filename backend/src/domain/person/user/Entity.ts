@@ -15,7 +15,7 @@ export class User extends Person {
   password!: string;
 
   @Property({ hidden: true, lazy: true })
-  salt!: string;
+  salt!: string
 
   @OneToMany(() => Contact, contact => contact.referal, { cascade: [Cascade.ALL], orphanRemoval: true })
   contacts = new Collection<Contact>(this);

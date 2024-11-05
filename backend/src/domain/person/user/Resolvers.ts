@@ -20,7 +20,9 @@ export class UserGraphQLResolver {
       throw new BadRequestError(validation.error.errors[0].message);
     }
 
-    return await userRepository.create(validation.data);
+    const res = await userRepository.create(validation.data);
+    console.log('User created', res);
+    return res
   }
 
   async updateUser(args: { id: string, data: unknown }) {
