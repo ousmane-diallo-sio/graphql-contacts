@@ -15,8 +15,16 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction) =
 
 export const jwt = expressjwt({ secret: EnvConfig.JWT_SECRET, algorithms: ['HS256'] });
 
+export const graphqljwt = (req: Request, res: Response, next: NextFunction) => {
+  if (req.originalUrl === "/graphql") {
+    return expressjwt({ secret: EnvConfig.JWT_SECRET, algorithms: ['HS256'], credentialsRequired: false })(req, res, next);
+  }
+  next();
+}
+
 export const authErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   if (err.name === 'UnauthorizedError') {
+    if (req.originalUrl === "/graphql") return next();
     return formatResponse(res, { status: 401, messages: [{ type: "error", message: "invalid-token" }] });
   }
   next();

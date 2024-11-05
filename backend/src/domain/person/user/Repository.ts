@@ -2,8 +2,8 @@ import { ServerMessage } from '../../../types/response';
 import { omit } from '../../../lib/utils';
 import { User } from './Entity';
 import { orm } from '../../..';
-import { FilterQuery, LoadStrategy, wrap } from '@mikro-orm/core';
-import { NotFoundError } from '../../../exceptions/FedodoError';
+import { FilterQuery, FindAllOptions, FindOneOrFailOptions, LoadStrategy, PopulatePath, wrap } from '@mikro-orm/core';
+import { NotFoundError } from '../../../exceptions/GraphQLContactError';
 import { CreateUserDTO, UpdateUserDTO } from '.';
 import { Address } from '../../address/Entity';
 import { SocialNetworks } from '../../social-networks/Entity';
@@ -43,14 +43,13 @@ class UserRepository {
     await em.persistAndFlush(user);
 
     return {
-      data: omit(user, ["password", "salt"]),
+      data: user,
       jwt: user.generateToken()
     };
   }
 
   async update(id: string, data: UpdateUserDTO): Promise<any> {
     const em = orm.em.fork();
-
     const user = await em.findOneOrFail(User, id, { 
       failHandler: () => new NotFoundError() }
     );
@@ -70,26 +69,24 @@ class UserRepository {
     return await em.removeAndFlush(userRef);
   }
 
-  async findAll() {
+  async findAll(options?: FindAllOptions<User, never, "*", never> | undefined) {
     const em = orm.em.fork();
-    return await em.find(User, {}, {
-        exclude: ['password', 'salt']
-      }
-    );
+    return await em.findAll(User, options);
   }
 
-  async findById(id: string) {
+  async findById(id: string, options?: FindOneOrFailOptions<User, never, "*", never> | undefined) {
     const em = orm.em.fork();
     return await em.findOneOrFail(User, id, {
-      exclude: ['password', 'salt'],
+      ...options,
       failHandler: () => new NotFoundError(),
     }
     );
   }
 
-  async findByEmailForLogin(email: string) {
+  async findByEmailForLogin(email: string, options?: FindOneOrFailOptions<User, never, "*", never> | undefined) {
     const em = orm.em.fork();
     return await em.findOneOrFail(User, { email }, {
+      ...options,
       failHandler: () => new NotFoundError(),
     });
   }
