@@ -1,1 +1,138 @@
-../../../backend/schema.graphql
+type Address {
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+
+type SocialNetworks {
+  facebookUrl: String!
+  twitterUrl: String!
+  instagramUrl: String!
+  linkedinUrl: String!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+interface Person {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
+}
+
+type Contact implements Person {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
+  referral: User!
+}
+
+type User implements Person {
+  id: ID!
+  email: String!
+  name: String!
+  address: Address
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworks
+  password: String!
+  salt: String!
+  contacts: [Contact!]!
+}
+
+type Query {
+  user(id: ID!): User!
+  users: [User!]!
+  searchUsers(name: String!): [User!]!
+  contact(id: ID!): Contact!
+  contacts: [Contact!]!
+}
+
+input AddressInput {
+  street: String!
+  city: String!
+  zip: String!
+  country: String!
+}
+
+input SocialNetworksInput {
+  facebookUrl: String
+  twitterUrl: String
+  instagramUrl: String
+  linkedinUrl: String
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  address: AddressInput
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  address: AddressInput
+  phoneNumber: String
+  gender: Gender
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+  password: String
+}
+
+input CreateContactInput {
+  email: String!
+  name: String!
+  address: AddressInput
+  phoneNumber: String
+  gender: Gender!
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+  referral: ID!
+}
+
+input UpdateContactInput {
+  email: String
+  name: String
+  address: AddressInput
+  phoneNumber: String
+  gender: Gender
+  height: Float
+  weight: Float
+  socialNetworks: SocialNetworksInput
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+  createContact(input: CreateContactInput!): Contact!
+  updateContact(id: ID!, input: UpdateContactInput!): Contact!
+  deleteContact(id: ID!): Boolean!
+  login(email: String!, password: String!): String!
+}
